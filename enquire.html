@@ -8,6 +8,7 @@
     <title>Enquire | Pawsitive Pet Academy</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
 </head>
 
 <body>
@@ -17,19 +18,19 @@
         <nav>
 
             <a href="index.html" class="logo">
-                <img src="images/logo.png" alt="Pawsitive Pet Academy Logo">
+                <img src="images/pawsitive-logo-0.1.png" alt="Pawsitive Pet Academy Logo">
             </a>
 
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="courses.html">Courses</a></li>
-                <li><a href="quote.html">Quote</a></li>
+                <li><a href="calculate-fees.html">Quote</a></li>
                 <li><a href="enquire.html">Enquire</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
             </ul>
 
-            <a href="quote.html" class="button">
+            <a href="calculate-fees.html" class="button">
                 Get A Quote
             </a>
 
@@ -40,7 +41,7 @@
 
     <main>
 
-        <section>
+        <section class="centered">
 
             <h1>Enquire</h1>
 
@@ -49,8 +50,10 @@
                 Send us an enquiry.
             </p>
 
+            <p id="form-status" role="alert" hidden></p>
 
-            <form action="confirmation.html" method="get">
+
+            <form action="confirmation.html" method="get" id="enquiry-form" novalidate>
 
                 <label for="name">
                     Full Name

@@ -8,6 +8,7 @@
     <title>Course Details | Pawsitive Pet Academy</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
 </head>
 
 <body>
@@ -17,19 +18,19 @@
         <nav>
 
             <a href="index.html" class="logo">
-                <img src="images/logo.png" alt="Pawsitive Pet Academy Logo">
+                <img src="images/pawsitive-logo-0.1.png" alt="Pawsitive Pet Academy Logo">
             </a>
 
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
                 <li><a href="courses.html">Courses</a></li>
-                <li><a href="quote.html">Quote</a></li>
+                <li><a href="calculate-fees.html">Quote</a></li>
                 <li><a href="enquire.html">Enquire</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
             </ul>
 
-            <a href="quote.html" class="button">
+            <a href="calculate-fees.html" class="button">
                 Get A Quote
             </a>
 
@@ -39,62 +40,72 @@
 
 
     <main>
-
-        <section class="hero">
-
-            <img src="images/animal-behaviour.jpg"
+ 
+        <section class="hero course-details">
+                
+        <img id="course-image"
+                 src="images/animal-behaviour.jpeg"
                  alt="Animal behaviour training">
-
-
+ 
+ 
             <div>
-
-                <h1>Animal Behaviour</h1>
-
-                <p>
-                    <strong>Duration:</strong> 6 Months
+ 
+                <h1 id="course-title">Animal Behaviour</h1>
+ 
+                <div class="course-facts">
+                    <span id="course-duration">6 Months</span>
+                    <span id="course-price">R1 500</span>
+                </div>
+ 
+ 
+                <h2>Purpose</h2>
+ 
+                <p id="course-purpose">
+                    To understand common pet behaviours and improve
+                    communication with animals.
                 </p>
-
-                <p>
-                    <strong>Price:</strong> R1 500
-                </p>
-
-
-                <h2>Course Purpose</h2>
-
-                <p>
-                    Learn practical approaches to understanding
-                    animal behaviour and supporting positive
-                    interactions between pets and people.
-                </p>
-
-
-                <h2>What You Will Learn</h2>
-
-                <ul>
-
-                    <li>Understanding common behaviours</li>
-
-                    <li>Positive training techniques</li>
-
-                    <li>Reading animal body language</li>
-
-                    <li>Safe handling and communication</li>
-
+ 
+ 
+                <h2>Content</h2>
+ 
+                <ul id="course-content">
+ 
+                    <li>Animal psychology</li>
+ 
+                    <li>Reading body language</li>
+ 
+                    <li>Stress management</li>
+ 
+                    <li>Behaviour modification</li>
+ 
+                    <li>Enrichment activities</li>
+ 
                 </ul>
-
-
-                <a href="quote.html" class="button">
-                    Add To Quote
+ 
+ 
+                <p id="course-status" role="status" aria-live="polite" hidden></p>
+ 
+ 
+                <div class="button-row">
+ 
+                    <a href="calculate-fees.html" class="button" id="add-to-quote">
+                        Add To Quote
+                    </a>
+ 
+                    <a href="enquire.html" class="button" id="ask-question">
+                        Ask A Question
+                    </a>
+ 
+                </div>
+ 
+                <a href="faq.html" class="button coral hero-faq">
+                    FAQ
                 </a>
-
-                <a href="enquire.html" class="button">
-                    Ask A Question
-                </a>
-
+ 
             </div>
-
+ 
         </section>
-
+ 
     </main>
 
 
