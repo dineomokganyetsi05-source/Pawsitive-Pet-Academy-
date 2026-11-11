@@ -516,14 +516,6 @@ hr {
     border-top: 2px dashed var(--line);
 }
 
-.selection h2 {
-    margin-top: 1.5rem;
-    font-size: 1.25rem;
-}
-
-.selection .button {
-    margin-top: 0.5rem;
-}
 footer {
     padding: 1.5rem 1.25rem;
     background: var(--blue);
