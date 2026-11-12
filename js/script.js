@@ -6,7 +6,7 @@ const COURSES = [
         name: 'Canine Obedience Training',
         length: '6 Months',
         price: 1500,
-        image: 'images/canine-obedience- training.jpeg',
+        image: 'images/canine-obedience-training.jpeg',
         purpose: 'To teach effective dog obedience and behavioural training techniques.',
         content: ['Basic commands', 'Leash training', 'Behaviour correction', 'Positive reinforcement', 'Socialisation techniques'] 
     },
@@ -54,13 +54,21 @@ const COURSES = [
         image: 'images/basic-dog-walking.jpeg',
         purpose: 'To teach safe and professional dog walking practices.',
         content: ['Walking equipment', 'Handling multiple dogs', 'Safety procedures', 'Exercise routines']
-    }
+    },
+    {
+        id: 'animal-behaviour',
+        name: 'Animal Behaviour',
+        length: '6 Months',
+        price: 1500,
+        image: 'images/animal-behaviour.jpeg',
+        purpose: 'To understand common pet behaviours and improve communication with animals.',
+        content: ['Animal psychology', 'Reading body language', 'Stress management', 'Behaviour modification', 'Enrichment activities']
+    },
 ];
 
 const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => 
-    Array.from(root.querySelectorAll(selector));
-
+const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+ 
 function findCourse(id) {
     return COURSES.find(course => course.id === id) || null;
 }
@@ -69,32 +77,32 @@ function formatRand(amount) {
     return 'R' + String(Math.round(amount)).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0');
 }
 
-function discountRate(courseCount){
+function discountRate(courseCount) {
     if (courseCount >= 4) return 0.15;
     if (courseCount === 3) return 0.10;
     if (courseCount === 2) return 0.05;
     return 0;
 }
-
+ 
 function calculateTotals(ids) {
     const items = ids.map(findCourse).filter(Boolean);
     const subtotal = items.reduce((sum, course) => sum + course.price, 0);
     const rate = discountRate(items.length);
     const discount = Math.round(subtotal * rate);
-    return {items, subtotal, rate, discount, total: subtotal - discount};
+    return { items, subtotal, rate, discount, total: subtotal - discount };
 }
-
+ 
 function makeReference(prefix) {
-    return prefix + ' - '+ Math.floor(10000 + Math.random() * 90000);
+    return prefix + ' - ' + Math.floor(10000 + Math.random() * 90000);
 }
 
 function showMessage(element, html, type) {
     if (!element) return;
-    element.className = 'status' + (type === 'error' ? 'error' : '');
+    element.className = 'status' + (type === 'error' ? ' error' : '');
     element.innerHTML = html;
     element.hidden = false;
 }
-
+ 
 function hideMessage(element) {
     if (element) element.hidden = true;
 }
@@ -108,16 +116,16 @@ function getStorage(name) {
         storage.setItem(testKey, '1');
         storage.removeItem(testKey);
         return storage;
-        } catch (error) {
-            return null;
-        }
+    } catch (error) {
+        return null;  
+    }
 }
 
 const localStore = getStorage('localStorage');
 const sessionStore = getStorage('sessionStorage');
 const hasLocalStorage = localStore !== null;
 const hasSessionStorage = sessionStore !== null;
-
+ 
 function readSaved(storage, key, fallback) {
     try {
         const raw = storage ? storage.getItem(key) : memoryStore[key];
@@ -138,23 +146,23 @@ function writeSaved(storage, key, value) {
         return false;
     }
 }
-
+ 
 function getSelection() {
     const saved = readSaved(localStore, 'ppa.selection', []);
-    return Array.isArray(saved) ? saved.filter((id, i) => findCourse(id) && saved.indexOf(id) === i) : [];
+     return Array.isArray(saved) ? saved.filter((id, i) => findCourse(id) && saved.indexOf(id) === i) : [];
 }
-
+ 
 function setSelection(ids) {
     writeSaved(localStore, 'ppa.selection', ids);
     refreshQuoteBadge();
 }
-
+ 
 function addToSelection(id) {
     const ids = getSelection();
     if (!ids.includes(id)) ids.push(id);
     setSelection(ids);
 }
-
+ 
 function removeFromSelection(id) {
     setSelection(getSelection().filter(existing => existing !== id));
 }
@@ -166,16 +174,17 @@ function initDropdown() {
  
     const setOpen = open => {
         dropdown.classList.toggle('open', open);
-        dropdown.classList.toggle('open', open);
+        // "force-closed" beats the hover rule, so a click or Escape really closes it
+        dropdown.classList.toggle('force-closed', !open);
         toggle.setAttribute('aria-expanded', String(open));
     };
-
-     toggle.addEventListener('click', event => {
+ 
+    toggle.addEventListener('click', event => {
         event.stopPropagation();
         setOpen(!dropdown.classList.contains('open'));
     });
 
-     dropdown.addEventListener('mouseleave', () => dropdown.classList.remove('force-closed'));
+    dropdown.addEventListener('mouseleave', () => dropdown.classList.remove('force-closed'));
  
     document.addEventListener('click', event => {
         if (!dropdown.contains(event.target)) setOpen(false);
@@ -193,11 +202,11 @@ function initCurrentPage() {
     const file = window.location.pathname.split('/').pop() || 'index.html';
 
     const parent = {
-        'six-month.html' : 'courses.html',
-        'six-week.html' : 'courses.html',
-        'course-details.html' : 'courses.html',
-        'quote.html' : 'calculate-fees.html ',
-        'confirmation.html' : 'enquire.html'
+        'six-month.html': 'courses.html',
+        'six-weeks.html': 'courses.html',
+        'course-details.html': 'courses.html',
+        'quote.html': 'calculate-fees.html',
+        'confirmation.html': 'enquire.html'
     };
     const target = parent[file] || file;
  
@@ -209,7 +218,7 @@ function initCurrentPage() {
         }
     });
 
-     $$('.tabs a').forEach(link => {
+    $$('.tabs a').forEach(link => {
         if (link.getAttribute('href') === file) link.setAttribute('aria-current', 'page');
     });
 }
@@ -234,11 +243,11 @@ function initCourseDetails() {
     const title = $('#course-title');
     if (!title) return;
  
-    const section = $('.course-details');
+    const section = $('.course-detail');
     const requested = new URLSearchParams(window.location.search).get('course');
     const course = findCourse(requested || 'animal-behaviour');
 
-     if (!course) {
+    if (!course) {
         section.innerHTML =
             '<div><p class="status error" role="alert">Sorry, we could not find that course.</p>' +
             '<a href="courses.html" class="button">View All Courses</a></div>';
@@ -265,7 +274,7 @@ function initCourseDetails() {
  
     $('#ask-question').href = 'enquire.html?course=' + encodeURIComponent(course.id);
 
-    const addButton = $('#add-to-quote');
+     const addButton = $('#add-to-quote');
     const message = $('#course-status');
  
     const showButtonState = () => {
@@ -315,7 +324,7 @@ function initSelectionPage() {
  
     function render() {
         const totals = calculateTotals(getSelection());
-
+ 
         tbody.innerHTML = '';
         totals.items.forEach(course => {
             const row = document.createElement('tr');
@@ -340,7 +349,7 @@ function initSelectionPage() {
         });
  
         emptyMessage.hidden = totals.items.length > 0;
-
+ 
         $$('.discount-bars span').forEach((bar, index) => {
             bar.classList.toggle('on', index < totals.items.length);
         });
@@ -354,8 +363,7 @@ function initSelectionPage() {
         requestButton.setAttribute('aria-disabled', String(totals.items.length === 0));
     }
 
-
-tbody.addEventListener('click', event => {
+    tbody.addEventListener('click', event => {
         const button = event.target.closest('.remove-btn');
         if (!button) return;
         removeFromSelection(button.closest('tr').dataset.course);
@@ -365,7 +373,7 @@ tbody.addEventListener('click', event => {
 
     requestButton.addEventListener('click', event => {
         const totals = calculateTotals(getSelection());
-
+ 
         if (totals.items.length === 0) {
             event.preventDefault();
             showMessage(status, 'Please add at least one course before requesting a quote. <a href="courses.html">Browse courses</a>', 'error');
@@ -386,8 +394,8 @@ tbody.addEventListener('click', event => {
             event.preventDefault();
             showMessage(status, 'Sorry, your browser would not save the quote. Please allow site data and try again.', 'error');
         }
-    });
-
+          });
+ 
     render();
 }
 
@@ -436,7 +444,7 @@ const FIELD_RULES = {
     },
     phone(value) {
         const text = value.trim();
-        if (!text) return '';
+        if (!text) return '';  
         const digits = text.replace(/\D/g, '');
         if (!/^\+?[\d\s()\-]+$/.test(text) || digits.length < 9 || digits.length > 15) {
             return 'Please enter a valid phone number (9 to 15 digits).';
@@ -499,7 +507,7 @@ function initEnquiryForm() {
         }
  
         hideMessage(summary);
-
+ 
         if (!hasSessionStorage) return;
  
         event.preventDefault();
@@ -520,8 +528,7 @@ function initConfirmationPage() {
     if (!reference) return;
  
     let enquiry = readSaved(sessionStore, 'ppa.lastEnquiry', null);
- 
-    // fallback: details sent in the web address
+
     const params = new URLSearchParams(window.location.search);
     if (!enquiry && params.get('name')) {
         const course = findCourse(params.get('course') || '');
@@ -583,25 +590,31 @@ function initImageFallback() {
         image.addEventListener('error', useFallback);
         if (image.complete && image.naturalWidth === 0 && image.getAttribute('src')) useFallback();
     });
-} 
+}
 
 function safely(part) {
     try {
         part();
+        return true;
     } catch (error) {
         console.error('Pawsitive site: ' + part.name + ' failed', error);
+        return false;
     }
 }
  
 document.addEventListener('DOMContentLoaded', () => {
-    safely(initDropdown);
-    safely(initCurrentPage);
-    safely(refreshQuoteBadge);
-    safely(initCourseDetails);
-    safely(initSelectionPage);
-    safely(initQuotePage);
-    safely(initEnquiryForm);
-    safely(initConfirmationPage);
-    safely(initFaq);
-    safely(initImageFallback);
+    const results = [
+        safely(initDropdown),
+        safely(initCurrentPage),
+        safely(refreshQuoteBadge),
+        safely(initCourseDetails),
+        safely(initSelectionPage),
+        safely(initQuotePage),
+        safely(initEnquiryForm),
+        safely(initConfirmationPage),
+        safely(initFaq),
+        safely(initImageFallback)
+    ];
+
+    if (results.every(Boolean)) document.documentElement.classList.add('js-ready');
 });
