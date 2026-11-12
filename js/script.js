@@ -174,8 +174,7 @@ function initDropdown() {
  
     const setOpen = open => {
         dropdown.classList.toggle('open', open);
-        // "force-closed" beats the hover rule, so a click or Escape really closes it
-        dropdown.classList.toggle('force-closed', !open);
+         dropdown.classList.toggle('force-closed', !open);
         toggle.setAttribute('aria-expanded', String(open));
     };
  
@@ -197,6 +196,7 @@ function initDropdown() {
         }
     });
 }
+
  
 function initCurrentPage() {
     const file = window.location.pathname.split('/').pop() || 'index.html';
@@ -208,6 +208,7 @@ function initCurrentPage() {
         'quote.html': 'calculate-fees.html',
         'confirmation.html': 'enquire.html'
     };
+
     const target = parent[file] || file;
  
     $$('nav a').forEach(link => {
